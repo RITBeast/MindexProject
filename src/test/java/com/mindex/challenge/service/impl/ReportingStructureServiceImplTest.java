@@ -131,7 +131,7 @@ public class ReportingStructureServiceImplTest {
 
                     if (report2.getEmployeeId().equals(secondReport.getEmployeeId())) {
 
-                        assertNull(rs.getEmployee().getDirectReports());
+                        assertNull(report2.getDirectReports());
 
                         assertEmployeeEquivalence(secondReport, report2);
 
