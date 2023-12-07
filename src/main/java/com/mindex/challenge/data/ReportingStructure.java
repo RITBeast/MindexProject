@@ -3,8 +3,16 @@ package com.mindex.challenge.data;
 import java.util.List;
 
 public class ReportingStructure{
-    public static int numberOfReports = 0;
     Employee employee;
+    private int numberOfReports = 0;
+
+    public int getNumberOfReports() {
+        return numberOfReports;
+    }
+
+    public void setNumberOfReports(int numberOfReports) {
+        this.numberOfReports = numberOfReports;
+    }
 
     public Employee getEmployee() {
         return employee;

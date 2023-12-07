@@ -2,6 +2,7 @@ package com.mindex.challenge.controller;
 
 import com.mindex.challenge.data.ReportingStructure;
 import com.mindex.challenge.service.ReportingStructureService;
+import com.mindex.challenge.service.impl.ReportingStructureServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
