@@ -12,38 +12,51 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Component
 public class DataBootstrap {
-    private static final String DATASTORE_LOCATION = "/static/employee_database.json";
+    private static final String EMPLOYEE_DATASTORE_LOCATION = "/static/employee_database.json";
+    private static final String COMPENSATION_DATASTORE_LOCATION = "/static/compensation_database.json";
     private static final Logger LOG = LoggerFactory.getLogger(DataBootstrap.class);
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
     private CompensationRepository compensationRepository;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @PostConstruct
     public void init() {
-        InputStream inputStream = this.getClass().getResourceAsStream(DATASTORE_LOCATION);
-
+        InputStream employeeInputStream = this.getClass().getResourceAsStream(EMPLOYEE_DATASTORE_LOCATION);
+        InputStream compensationInputStream = this.getClass().getResourceAsStream(COMPENSATION_DATASTORE_LOCATION);
         Employee[] employees;
-        Compensation[] compensation = null;
+        Compensation[] compensationArray;
+
         try {
-            employees = objectMapper.readValue(inputStream, Employee[].class);
+            employees = objectMapper.readValue(employeeInputStream, Employee[].class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            compensation = objectMapper.readValue(inputStream, Compensation[].class);
+            LOG.warn("Reading Compensation");
+            compensationArray = objectMapper.readValue(compensationInputStream, Compensation[].class);
+            LOG.warn("Read Compensation " + compensationArray.length);
+
         } catch (IOException e) {
             LOG.warn("Error loading compensation");
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
 
         for (Employee employee : employees) {
             employeeRepository.insert(employee);
+        }
+        for(Compensation compensation: compensationArray){
+            LOG.warn("Loading compensation " + compensation);
+            compensationRepository.insert(compensation);
         }
     }
 }

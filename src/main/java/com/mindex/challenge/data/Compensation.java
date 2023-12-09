@@ -1,36 +1,44 @@
 package com.mindex.challenge.data;
 
-import java.time.LocalDateTime;
+import org.springframework.data.annotation.PersistenceConstructor;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
 
 public class Compensation{
 
-    private Double Salary;
+    private Double salary;
     private String employeeId;
-    private LocalDateTime effectiveDate;
+    private LocalDate effectiveDate;
+
 
     public Double getSalary() {
-        return Salary;
+        return salary;
     }
 
     public void setSalary(Double salary) {
-        Salary = salary;
+        this.salary = salary;
     }
 
     public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployee(String employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
-    public LocalDateTime getEffectiveDate() {
+    public LocalDate getEffectiveDate() {
         return effectiveDate;
     }
 
-    public void setEffectiveDate(LocalDateTime effectiveDate) {
+    public void setEffectiveDate(LocalDate effectiveDate) {
         this.effectiveDate = effectiveDate;
     }
 
+    public String toString(){
+        return "EmployeeId: " + employeeId + " Salary: " + this.salary + ", effectiveDate: " + this.effectiveDate;
+    }
 
 }
