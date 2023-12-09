@@ -12,7 +12,6 @@ public class Compensation{
     private String employeeId;
     private LocalDate effectiveDate;
 
-
     public Double getSalary() {
         return salary;
     }
@@ -39,6 +38,19 @@ public class Compensation{
 
     public String toString(){
         return "EmployeeId: " + employeeId + " Salary: " + this.salary + ", effectiveDate: " + this.effectiveDate;
+    }
+    @Override
+    public boolean equals(Object o){
+        if (getClass() != o.getClass()) {
+            return false;
+        }
+        Compensation passedObj = (Compensation) o;
+        if(this.getSalary().equals(passedObj.getSalary())
+                && this.effectiveDate.equals(passedObj.getEffectiveDate())
+                && this.employeeId.equals(passedObj.getEmployeeId())){
+            return true;
+        }
+        return false;
     }
 
 }
