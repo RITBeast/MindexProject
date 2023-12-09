@@ -22,7 +22,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     @Override
     public ReportingStructure getReports(String id) {
         //We may need a semaphore here? Seems to be working without it, but if we start getting odd
-        //numbers out of the reportCounter, uncommenting this might be a start.
+        //numbers out of the reportCounter or concurrency issues, uncommenting this might be a start.
        /* while(ReportingStructureServiceImpl.reportCounter != 0){
             try {
                 wait(100);

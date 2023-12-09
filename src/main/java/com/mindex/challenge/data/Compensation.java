@@ -1,10 +1,6 @@
 package com.mindex.challenge.data;
 
-import org.springframework.data.annotation.PersistenceConstructor;
-
 import java.time.LocalDate;
-import java.util.UUID;
-
 
 public class Compensation{
 

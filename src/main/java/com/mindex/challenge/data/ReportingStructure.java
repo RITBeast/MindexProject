@@ -1,7 +1,5 @@
 package com.mindex.challenge.data;
 
-import java.util.List;
-
 public class ReportingStructure{
     Employee employee;
     private int numberOfReports = 0;

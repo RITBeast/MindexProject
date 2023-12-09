@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 @Component
 public class DataBootstrap {
