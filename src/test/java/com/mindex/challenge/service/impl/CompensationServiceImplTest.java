@@ -57,7 +57,7 @@ public class CompensationServiceImplTest {
     @Test
     public void testCreateRead() {
         Compensation testComp = new Compensation();
-        testComp.setEmployeeId("Testy Testerson"); //Ringo doesn't have an entry, so we can play with this
+        testComp.setEmployeeId("b7839309-3348-463b-a7e3-5de1c168beb3"); //McCartney
         testComp.setSalary(12.50);
         testComp.setEffectiveDate(LocalDate.now());
 
@@ -79,12 +79,12 @@ public class CompensationServiceImplTest {
     @Test
     public void testMultipleCreate() {
         Compensation testComp = new Compensation();
-        testComp.setEmployeeId("Testy Testerson III"); //Ringo doesn't have an entry, so we can play with this
+        testComp.setEmployeeId("03aa1462-ffa9-4978-901b-7c001562cf6f"); //Ringo
         testComp.setSalary(12.50);
         testComp.setEffectiveDate(LocalDate.now());
 
         Compensation testComp2 = new Compensation();
-        testComp2.setEmployeeId("Testy Testerson III"); //Ringo doesn't have an entry, so we can play with this
+        testComp2.setEmployeeId("03aa1462-ffa9-4978-901b-7c001562cf6f"); //Ringo
         testComp2.setSalary(15.50);
 
         testComp2.setEffectiveDate(LocalDate.now().plusDays(15));
@@ -100,6 +100,18 @@ public class CompensationServiceImplTest {
         assertTrue(createdCompensationList.contains(testComp));
         assertTrue(createdCompensationList2.contains(testComp));
         assertTrue(createdCompensationList2.contains(testComp2));
+
+    }
+    @Test(expected = RuntimeException.class)
+    public void testCreateFailure() {
+        Compensation testComp = new Compensation();
+        testComp.setEmployeeId("Testy Testerson"); //Does not exist
+        testComp.setSalary(12.50);
+        testComp.setEffectiveDate(LocalDate.now());
+
+        //This should throw a runtime exception
+        List<Compensation> createdCompensationList = Arrays.asList(restTemplate.postForEntity(compensationUrl, testComp, Compensation[].class).getBody());
+
 
     }
 }

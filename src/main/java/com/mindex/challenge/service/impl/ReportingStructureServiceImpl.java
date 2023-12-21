@@ -18,51 +18,49 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    private static int reportCounter =0;
     @Override
     public ReportingStructure getReports(String id) {
-        //We may need a semaphore here? Seems to be working without it, but if we start getting odd
-        //numbers out of the reportCounter or concurrency issues, uncommenting this might be a start.
-       /* while(ReportingStructureServiceImpl.reportCounter != 0){
-            try {
-                wait(100);
-            } catch (InterruptedException e){
 
-            }
-        }*/
-        ReportingStructure completeReportingStructure = generateReportTreeForEmployee(id);
-        ReportingStructureServiceImpl.reportCounter = 0;
-        return completeReportingStructure;
+        ArrayList<String> seenIds = new ArrayList<>();
+        seenIds.add(id);
 
+        return generateReportTreeForEmployee(id, seenIds);
 
     }
 
-    private ReportingStructure generateReportTreeForEmployee(String id){
+    private ReportingStructure generateReportTreeForEmployee(String id, ArrayList<String> seenIds){
         LOG.debug("Getting employee RS [{}]", id);
-        //get and set the employee
         Employee employee = employeeRepository.findByEmployeeId(id);
         ReportingStructure reports = new ReportingStructure();
+        ArrayList<Employee> loadedReports = new ArrayList<>();
+        int counter = 0; //track each individual level of reports with the counter
+
         if (employee == null) {
             throw new RuntimeException("Invalid employeeId: " + id);
         }
         reports.setEmployee(employee);
 
-        LOG.debug("Set employee");
-        ArrayList<Employee> loadedReports = new ArrayList<>();
-
         if(employee.getDirectReports() !=null) {
+
             //for each direct report, pull their data and load their reports (if any), count as we go and add the Employee and their reports as we
             //pop back up the recursion stack.
             for (Employee report : employee.getDirectReports()) {
+                //avoid potential infinite loop, just ignore this employee if we've seen them before
+                if(!seenIds.contains(report.getEmployeeId())) {
 
-                ReportingStructureServiceImpl.reportCounter++;
-                LOG.debug("Getting employee RS [{}]", report.getEmployeeId());
-                ReportingStructure singleEmployeeStructure = generateReportTreeForEmployee(report.getEmployeeId());
-                loadedReports.add(singleEmployeeStructure.getEmployee());
+                    LOG.debug("Getting employee RS [{}]", report.getEmployeeId());
+                    seenIds.add(report.getEmployeeId());
+                    ReportingStructure singleEmployeeStructure = generateReportTreeForEmployee(report.getEmployeeId(), seenIds);
+
+                    loadedReports.add(singleEmployeeStructure.getEmployee());
+                    //count direct reports' direct reports
+                    counter += singleEmployeeStructure.getNumberOfReports() + 1;
+
+                }
             }
             employee.setDirectReports(loadedReports);
         }
-        reports.setNumberOfReports(ReportingStructureServiceImpl.reportCounter);
+        reports.setNumberOfReports(counter);
 
         return reports;
     }

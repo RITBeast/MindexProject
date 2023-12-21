@@ -78,6 +78,8 @@ public class ReportingStructureServiceImplTest {
     @Test
     public void testRetrieveReportingStructureMultiLevel() {
 
+    //THIS TEST ALSO DOUBLES TO MAKE SURE WE BREAK OUT OF AN INFINITE LOOP SO LONG AS THERE'S AN EMPLOYEE ID ADDED TO A DIRECT REPORT DOWN THE LINE
+
         //set the expected data
         Employee testEmployee = new Employee();
         testEmployee.setFirstName("John");
