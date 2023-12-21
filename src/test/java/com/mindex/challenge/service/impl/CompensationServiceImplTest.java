@@ -1,30 +1,18 @@
 package com.mindex.challenge.service.impl;
 
-import com.mindex.challenge.controller.CompensationController;
 import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.service.CompensationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,9 +26,6 @@ public class CompensationServiceImplTest {
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(CompensationServiceImplTest.class);
     private String compensationUrl;
     private String compensationIdUrl;
-
-    @Autowired
-    private CompensationService compensationService;
 
     @LocalServerPort
     private int port;

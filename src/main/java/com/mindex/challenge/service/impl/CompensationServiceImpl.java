@@ -3,7 +3,6 @@ package com.mindex.challenge.service.impl;
 import com.mindex.challenge.dao.CompensationRepository;
 import com.mindex.challenge.dao.EmployeeRepository;
 import com.mindex.challenge.data.Compensation;
-import com.mindex.challenge.data.Employee;
 import com.mindex.challenge.service.CompensationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
